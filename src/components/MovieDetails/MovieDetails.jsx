@@ -12,7 +12,7 @@ import {
   WrapCastReview,
 } from './MovieDetails.styled';
 import { Suspense } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import moviePoster from '../../images/photoshop-film-strip.jpg';
 import { BsFillStarFill } from 'react-icons/bs';
 
