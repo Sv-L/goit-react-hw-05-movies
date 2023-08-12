@@ -1,0 +1,39 @@
+.movie-list,
+.cast-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0 20px;
+}
+.cast-list,
+.reviews-list {
+  padding: 20px;
+  background-color: #6d90a8;
+  justify-content: center;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.movie-details-page {
+  background-color: #fff;
+  color: #202328;
+}
+.link-go-back {
+  width: 90px;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  /* color: #fff; */
+  /* color: #6d90a8; */
+
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.link-go-back:is(:hover, :focus) {
+  color: #6d90a8;
+}

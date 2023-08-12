@@ -1,5 +1,20 @@
+import {
+  Poster,
+  VoteAverage,
+  Wrap,
+  WrapInfo,
+  WrapInformation,
+  NavList,
+  Title,
+  TextTitle,
+  Text,
+  Link,
+  WrapCastReview,
+} from './MovieDetails.styled';
+import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import moviePoster from '../../images/photoshop-film-strip.jpg';
+import { BsFillStarFill } from 'react-icons/bs';
 
 const MovieDetails = ({ movie }) => {
   const src = movie.poster_path
@@ -8,45 +23,61 @@ const MovieDetails = ({ movie }) => {
 
   const title =
     movie.release_date === '' ? (
-      <h1>{movie.title}</h1>
+      <Title>{movie.title}</Title>
     ) : (
-      <h1>
+      <Title>
         {movie.title} ({`${movie.release_date}`.split('-')[0]})
-      </h1>
+      </Title>
     );
   const rating =
-    movie.vote_average !== 0 ? <p>{movie.vote_average.toFixed(1)}</p> : null;
+    movie.vote_average & (movie.vote_average !== 0) ? (
+      <VoteAverage>
+        <BsFillStarFill color="#6d90a8" />
+        <p>{movie.vote_average.toFixed(1)}</p>
+      </VoteAverage>
+    ) : null;
 
   const overview =
-    movie.overview & (movie.overview.length > 0) ? (
+    movie && movie.overview && movie.overview.length > 0 ? (
       <>
-        <h3>Overview</h3>
-        <p>{movie.overview}</p>
+        <TextTitle>Overview</TextTitle>
+        <Text>{movie.overview}</Text>
       </>
     ) : null;
   const genres = movie.genres && movie.genres.length > 0 && (
     <>
-      <h3>Genres:</h3> <p>{movie.genres.map(genre => genre.name).join(', ')}</p>
+      <TextTitle>Genres</TextTitle>{' '}
+      <Text>{movie.genres.map(genre => genre.name).join(', ')}</Text>
     </>
   );
 
   return (
     <>
-      <img src={src} alt={`Poster for ${movie.title}`} />
-      {title}
-      {rating}
-      {overview}
-      {genres}
-      <h2>Additional information</h2>
-      <ul>
-        <li>
-          <NavLink to="cast">Cast</NavLink>
-        </li>
-        <li>
-          <NavLink to="reviews">Reviews</NavLink>
-        </li>
-      </ul>
-      <Outlet />
+      <Wrap>
+        <Poster src={src} alt={`Poster for ${movie.title}`} />
+        <WrapInfo>
+          <WrapInformation>
+            {title}
+            {rating}
+            {overview}
+            {genres}
+          </WrapInformation>
+          <WrapCastReview>
+            <TextTitle>Additional information</TextTitle>
+            <NavList>
+              <li>
+                <Link to="cast">Cast</Link>
+              </li>
+              <li>
+                <Link to="reviews">Reviews</Link>
+              </li>
+            </NavList>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Outlet />
+            </Suspense>
+          </WrapCastReview>
+        </WrapInfo>
+      </Wrap>
     </>
   );
 };
